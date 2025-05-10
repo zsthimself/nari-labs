@@ -1,10 +1,9 @@
-"use client";
-
-import Image from "next/image";
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { useParams } from "next/navigation";
-import Header from "@/components/layout/Header";
+import Layout from "@/components/layout/Layout";
+import { ArticleStructuredData } from "@/components/ui/structured-data";
+import BlogPostImage from "@/components/blog/BlogPostImage";
 
 // Blog post interface definition
 interface BlogPost {
@@ -347,79 +346,154 @@ const blogPosts: Record<string, BlogPost> = {
   },
 };
 
-// Blog post page component
-export default function BlogPostPage() {
-  const params = useParams();
-  const slug = params.slug as string;
+// Generate metadata for the page
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+  // Get the blog post data
+  const post = blogPosts[params.slug];
   
-  // Check if the article exists
-  if (!blogPosts[slug]) {
+  // If the post doesn't exist, return a basic title
+  if (!post) {
+    return {
+      title: "Blog Post Not Found - Nari Labs"
+    };
+  }
+  
+  // Extract the first paragraph for description (remove HTML tags)
+  const firstParagraph = post.content
+    .split("<p>")[1]?.split("</p>")[0]
+    .replace(/<[^>]*>/g, "")
+    .trim()
+    .substring(0, 160);
+  
+  return {
+    title: `${post.title} | Nari Labs Blog`,
+    description: firstParagraph,
+    keywords: `${post.category}, Nari Labs, text-to-speech, AI voice, ${post.title.toLowerCase().replace(/[^\w\s]/gi, '').split(' ').join(', ')}`,
+    alternates: {
+      canonical: `/blog/${params.slug}`,
+    },
+    openGraph: {
+      title: post.title,
+      description: firstParagraph,
+      url: `https://narilabs.com/blog/${params.slug}`,
+      siteName: "Nari Labs",
+      locale: "en_US",
+      type: "article",
+      publishedTime: post.date,
+      authors: [post.author],
+      images: [
+        {
+          url: post.imageUrl,
+          width: 1200,
+          height: 630,
+          alt: post.title
+        }
+      ]
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: firstParagraph,
+      images: [post.imageUrl]
+    }
+  };
+}
+
+export default function BlogPostPage({ params }: { params: { slug: string } }) {
+  const post = blogPosts[params.slug];
+  
+  // If the post doesn't exist, show a 404 page
+  if (!post) {
     notFound();
   }
   
-  const post = blogPosts[slug];
+  // Extract the first paragraph for description (remove HTML tags)
+  const firstParagraph = post.content
+    .split("<p>")[1]?.split("</p>")[0]
+    .replace(/<[^>]*>/g, "")
+    .trim()
+    .substring(0, 160);
   
   return (
-    <div className="min-h-screen flex flex-col">
-      <Header />
+    <Layout>
+      <ArticleStructuredData
+        headline={post.title}
+        image={`https://narilabs.com${post.imageUrl}`}
+        datePublished={new Date(post.date).toISOString()}
+        author={{
+          name: post.author,
+          url: "https://narilabs.com/about"
+        }}
+        publisher={{
+          name: "Nari Labs",
+          logo: "https://narilabs.com/logo.svg"
+        }}
+        description={firstParagraph}
+        url={`https://narilabs.com/blog/${params.slug}`}
+      />
       
-      <main className="flex-1 container mx-auto px-4 py-8 md:py-12">
-        <article className="max-w-3xl mx-auto">
-          <Link 
-            href="/blog"
-            className="inline-flex items-center mb-6 text-blue-600 hover:text-blue-800"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-              <path fillRule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd" />
-            </svg>
-            Back to Blog
+      <article className="container mx-auto px-4 py-8 max-w-4xl">
+        <div className="mb-8">
+          <Link href="/blog" className="text-blue-600 hover:underline mb-4 inline-block">
+            ← Back to Blog
           </Link>
           
-          <div className="mb-8">
-            <div className="flex items-center gap-3 mb-4">
-              <span className="bg-blue-500 text-white text-xs font-medium px-2.5 py-1 rounded">{post.category}</span>
-              <span className="text-gray-500">{post.date}</span>
-            </div>
-            
-            <h1 className="text-3xl md:text-4xl font-bold mb-6">{post.title}</h1>
-            
-            <div className="relative h-[400px] mb-8 rounded-lg overflow-hidden">
-              <Image 
-                src={post.imageUrl} 
-                alt={post.title}
-                fill
-                className="object-cover"
-                onError={(e) => {
-                  // Fallback to placeholder when image fails to load
-                  const target = e.target as HTMLImageElement;
-                  target.src = "/placeholder-image.jpg";
-                }}
-              />
-            </div>
+          <h1 className="text-3xl md:text-4xl font-bold mt-4 mb-2">{post.title}</h1>
+          
+          <div className="flex items-center text-gray-600 mb-4">
+            <span>{post.date}</span>
+            <span className="mx-2">•</span>
+            <span>{post.author}</span>
+            <span className="mx-2">•</span>
+            <span className="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded">
+              {post.category}
+            </span>
           </div>
           
-          <div 
-            className="prose prose-lg max-w-none"
-            dangerouslySetInnerHTML={{ __html: post.content }}
+          <BlogPostImage 
+            src={post.imageUrl} 
+            alt={post.title}
           />
-          
-          <div className="border-t border-gray-200 mt-12 pt-8">
-            <div className="flex items-center">
-              <div className="w-12 h-12 rounded-full bg-gray-300 mr-4"></div>
-              <div>
-                <h3 className="font-medium">Author: {post.author}</h3>
-                <p className="text-gray-600">Nari Labs AI Researcher</p>
-              </div>
-            </div>
-          </div>
-        </article>
-      </main>
-      
-      <footer className="bg-gray-100 py-8 mt-auto">
-        <div className="container mx-auto px-4 text-center text-gray-600">
-          <p>© {new Date().getFullYear()} Nari Labs. All Rights Reserved.</p>
         </div>
-      </footer>
-    </div>
+        
+        <div 
+          className="prose prose-lg max-w-none"
+          dangerouslySetInnerHTML={{ __html: post.content }}
+        />
+        
+        <div className="mt-12 pt-8 border-t border-gray-200">
+          <h3 className="text-xl font-semibold mb-4">Share this article</h3>
+          <div className="flex space-x-4">
+            <a 
+              href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(`https://narilabs.com/blog/${params.slug}`)}`} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-gray-600 hover:text-blue-500"
+              aria-label="Share on Twitter"
+            >
+              Twitter
+            </a>
+            <a 
+              href={`https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(`https://narilabs.com/blog/${params.slug}`)}&title=${encodeURIComponent(post.title)}`} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-gray-600 hover:text-blue-700"
+              aria-label="Share on LinkedIn"
+            >
+              LinkedIn
+            </a>
+            <a 
+              href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(`https://narilabs.com/blog/${params.slug}`)}`} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-gray-600 hover:text-blue-600"
+              aria-label="Share on Facebook"
+            >
+              Facebook
+            </a>
+          </div>
+        </div>
+      </article>
+    </Layout>
   );
 } 

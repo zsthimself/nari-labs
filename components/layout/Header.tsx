@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import LanguageSwitcher from "@/components/ui/language-switcher";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -67,9 +68,16 @@ const Header = () => {
         </nav>
         
         <div className="hidden md:flex items-center gap-4">
-          <Button size="sm">
-            Try Now
-          </Button>
+          <LanguageSwitcher />
+          <Link 
+            href="https://huggingface.co/spaces/nari-labs/Dia-1.6B" 
+            target="_blank" 
+            rel="noopener noreferrer"
+          >
+            <Button size="sm">
+              Try Now
+            </Button>
+          </Link>
         </div>
         
         <button 
@@ -142,9 +150,19 @@ const Header = () => {
               Blog
             </Link>
             <div className="mt-4 flex flex-col gap-2">
-              <Button className="w-full justify-center">
-                Try Now
-              </Button>
+              <div className="mb-2">
+                <LanguageSwitcher />
+              </div>
+              <Link 
+                href="https://huggingface.co/spaces/nari-labs/Dia-1.6B" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="w-full"
+              >
+                <Button className="w-full justify-center">
+                  Try Now
+                </Button>
+              </Link>
             </div>
           </div>
         </div>

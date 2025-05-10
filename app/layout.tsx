@@ -2,12 +2,55 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
+import { OrganizationStructuredData, WebsiteStructuredData } from "@/components/ui/structured-data";
+import Head from "./head";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Nari Labs - Open-Source Text-to-Speech AI Platform",
   description: "Nari Labs provides high-quality open-source TTS technology, supporting multiple languages and voices, offering developers simple and easy-to-use voice synthesis solutions.",
+  keywords: "text-to-speech, TTS, AI voice, speech synthesis, open source TTS, voice AI, Nari Labs",
+  authors: [{ name: "Nari Labs Team" }],
+  creator: "Nari Labs",
+  publisher: "Nari Labs",
+  formatDetection: {
+    telephone: false,
+  },
+  metadataBase: new URL('https://narilabs.com'),
+  alternates: {
+    canonical: '/',
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  icons: {
+    icon: '/favicon.ico',
+  },
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    url: 'https://narilabs.com',
+    siteName: 'Nari Labs',
+    title: 'Nari Labs - Open-Source Text-to-Speech AI Platform',
+    description: 'High-quality open-source TTS technology supporting multiple languages and voices.',
+    images: [
+      {
+        url: 'https://narilabs.com/banner.png',
+        width: 1200,
+        height: 630,
+        alt: 'Nari Labs Banner',
+      }
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Nari Labs - Open-Source TTS AI',
+    description: 'High-quality open-source text-to-speech technology supporting multiple languages and voices.',
+    images: ['https://narilabs.com/banner.png'],
+    creator: '@narilabs',
+  }
 };
 
 export default function RootLayout({
@@ -17,7 +60,23 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="scroll-smooth">
+      <Head />
       <body className={inter.className}>
+        <OrganizationStructuredData 
+          name="Nari Labs"
+          url="https://narilabs.com"
+          logo="https://narilabs.com/logo.svg"
+          sameAs={[
+            "https://github.com/nari-labs",
+            "https://twitter.com/narilabs",
+            "https://linkedin.com/company/nari-labs"
+          ]}
+        />
+        <WebsiteStructuredData
+          name="Nari Labs"
+          url="https://narilabs.com"
+          description="Nari Labs provides high-quality open-source TTS technology, supporting multiple languages and voices, offering developers simple and easy-to-use voice synthesis solutions."
+        />
         {children}
       </body>
     </html>
