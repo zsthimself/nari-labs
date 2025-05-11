@@ -6,7 +6,7 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
   },
-  trailingSlash: true,
+  trailingSlash: false,
   eslint: {
     // 在生产构建时忽略ESLint错误
     ignoreDuringBuilds: true,
@@ -15,6 +15,7 @@ const nextConfig: NextConfig = {
     // 在生产构建时忽略TypeScript错误
     ignoreBuildErrors: true,
   },
+  assetPrefix: '',
 };
 
 export default nextConfig;

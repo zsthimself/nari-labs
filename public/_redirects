@@ -1,11 +1,19 @@
-/* /index.html 200
-/* /_next/* 200
-/* /static/* 200
-/* /assets/* 200
-/* /_next/static/* 200
-/* /_next/data/* 200
-/* /api/* 200
-/* /favicon.ico 200
-/* /manifest.json 200
-/* /robots.txt 200
-/* /sitemap*.xml 200 
+# 处理主页面
+/ /index.html 200
+
+# 处理动态路由
+/blog/* /index.html 200
+
+# 静态资源处理
+/_next/* /_next/:splat 200
+
+# API 路由
+/api/* /api/:splat 200
+
+# 特殊文件处理
+/favicon.ico /favicon.ico 200
+/robots.txt /robots.txt 200
+/sitemap.xml /sitemap.xml 200
+
+# 404 处理 - 所有其他路由返回到主应用
+/* /index.html 200 

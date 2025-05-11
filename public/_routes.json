@@ -1,13 +1,16 @@
 {
   "version": 1,
-  "include": ["/*"],
+  "include": [
+    "/*"
+  ],
   "exclude": [
     "/_next/static/*",
+    "/_next/image/*",
     "/static/*",
     "/assets/*",
     "/favicon.ico",
     "/robots.txt",
-    "/sitemap*.xml",
+    "/sitemap.xml",
     "/manifest.json"
   ]
 } 
