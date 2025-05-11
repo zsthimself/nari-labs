@@ -1,11 +1,8 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import { OrganizationStructuredData, WebsiteStructuredData } from "@/components/ui/structured-data";
 import Head from "./head";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Nari Labs - Open-Source Text-to-Speech AI Platform",
@@ -63,7 +60,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <Head />
-      <body className={inter.className}>
+      <body className="font-sans">
         <OrganizationStructuredData 
           name="Nari Labs"
           url="https://narilabs.com"

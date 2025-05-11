@@ -16,6 +16,8 @@ const nextConfig: NextConfig = {
     ignoreBuildErrors: true,
   },
   assetPrefix: '',
+  // 禁用字体优化，使用我们的自定义CSS字体
+  optimizeFonts: false,
 };
 
 export default nextConfig;
