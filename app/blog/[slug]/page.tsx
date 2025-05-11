@@ -5,6 +5,8 @@ import Layout from "@/components/layout/Layout";
 import { ArticleStructuredData } from "@/components/ui/structured-data";
 import BlogPostImage from "@/components/blog/BlogPostImage";
 
+export const dynamic = "force-static";
+
 // Blog post interface definition
 interface BlogPost {
   title: string;
@@ -397,6 +399,15 @@ export async function generateMetadata({ params }: { params: { slug: string } })
       images: [post.imageUrl]
     }
   };
+}
+
+export function generateStaticParams() {
+  // 返回所有可能的slug参数
+  return [
+    { slug: "dia-by-nari-labs-new-leader-in-ai-voice" },
+    { slug: "nari-labs-dia-1-6b-tts-model-review" },
+    { slug: "dia-tts-model" }
+  ];
 }
 
 export default function BlogPostPage({ params }: { params: { slug: string } }) {

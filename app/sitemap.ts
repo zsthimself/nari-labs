@@ -1,5 +1,8 @@
 import { MetadataRoute } from 'next';
 
+// 添加静态导出配置
+export const dynamic = "force-static";
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://narilabs.com';
   

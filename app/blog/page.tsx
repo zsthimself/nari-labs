@@ -19,6 +19,9 @@ export const metadata: Metadata = {
   }
 };
 
+// 添加静态导出配置
+export const dynamic = "force-static";
+
 // Blog post list
 const blogPosts = [
   {

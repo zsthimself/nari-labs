@@ -10,6 +10,8 @@ import FAQSection from "@/components/sections/FAQSection";
 import CTASection from "@/components/sections/CTASection";
 import Layout from "@/components/layout/Layout";
 
+export const dynamic = "force-static";
+
 export default function Home() {
   return (
     <Layout>
