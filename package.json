@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "cloudflare:build": "next build",
-    "build:no-lint": "NEXT_DISABLE_ESLINT=1 next build"
+    "build:no-lint": "NEXT_DISABLE_ESLINT=1 next build && next export"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.2.2",
