@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   formatDetection: {
     telephone: false,
   },
-  metadataBase: new URL('https://narilabs.com'),
+  metadataBase: new URL('https://naridiaai.pro'),
   alternates: {
     canonical: '/',
   },
@@ -28,13 +28,13 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://narilabs.com',
+    url: 'https://naridiaai.pro',
     siteName: 'Nari Labs',
     title: 'Nari Labs - Open-Source Text-to-Speech AI Platform',
     description: 'High-quality open-source TTS technology supporting multiple languages and voices.',
     images: [
       {
-        url: 'https://narilabs.com/banner.png',
+        url: 'https://naridiaai.pro/banner.png',
         width: 1200,
         height: 630,
         alt: 'Nari Labs Banner',
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Nari Labs - Open-Source TTS AI',
     description: 'High-quality open-source text-to-speech technology supporting multiple languages and voices.',
-    images: ['https://narilabs.com/banner.png'],
+    images: ['https://naridiaai.pro/banner.png'],
     creator: '@narilabs',
   }
 };
@@ -63,8 +63,8 @@ export default function RootLayout({
       <body className="font-sans">
         <OrganizationStructuredData 
           name="Nari Labs"
-          url="https://narilabs.com"
-          logo="https://narilabs.com/logo.svg"
+          url="https://naridiaai.pro"
+          logo="https://naridiaai.pro/logo.svg"
           sameAs={[
             "https://github.com/nari-labs",
             "https://twitter.com/narilabs",
@@ -73,7 +73,7 @@ export default function RootLayout({
         />
         <WebsiteStructuredData
           name="Nari Labs"
-          url="https://narilabs.com"
+          url="https://naridiaai.pro"
           description="Nari Labs provides high-quality open-source TTS technology, supporting multiple languages and voices, offering developers simple and easy-to-use voice synthesis solutions."
         />
         {children}
