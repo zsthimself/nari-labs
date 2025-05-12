@@ -9,7 +9,7 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
   },
-  trailingSlash: false,
+  trailingSlash: true,
   eslint: {
     // 在生产构建时忽略ESLint错误
     ignoreDuringBuilds: true,
@@ -20,8 +20,6 @@ const nextConfig: NextConfig = {
   },
   // 只在生产环境中指定资源前缀为自定义域名，开发环境使用默认空字符串
   assetPrefix: isProd ? 'https://naridiaai.pro' : '',
-  // 禁用字体优化，使用我们的自定义CSS字体
-  optimizeFonts: false,
 };
 
 export default nextConfig;

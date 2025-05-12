@@ -10,27 +10,15 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // 获取请求URL
-  const url = request.nextUrl.clone();
-  
-  // 检查是否已经存在重定向循环迹象
-  const redirectCount = request.headers.get('x-redirect-count') || '0';
-  const count = parseInt(redirectCount, 10);
-  
-  // 如果重定向次数过多，直接返回而不进行重定向
-  if (count > 5) {
-    return NextResponse.next();
-  }
-  
-  // 创建响应对象
-  const response = NextResponse.next();
-  
-  // 设置或增加重定向计数
-  response.headers.set('x-redirect-count', (count + 1).toString());
-  
-  return response;
+  // 简单返回响应，不做任何重定向
+  // 这可以防止潜在的重定向循环
+  return NextResponse.next();
 }
 
 export const config = {
-  matcher: '/((?!_next/static|_next/image|favicon.ico).*)',
+  // 只匹配真正需要的路径，避免不必要的处理
+  matcher: [
+    // 排除静态文件、API路由和其他特殊路径
+    '/((?!_next|static|api|favicon.ico|robots.txt|sitemap.xml).*)',
+  ],
 }; 
