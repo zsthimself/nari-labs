@@ -10,6 +10,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: ['/api/', '/admin/'],
     },
-    sitemap: 'https://narilabs.com/sitemap.xml',
+    sitemap: 'https://naridiaai.pro/sitemap.xml',
   };
 } 
